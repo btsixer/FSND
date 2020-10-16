@@ -230,36 +230,54 @@ def create_venue_form():
 def create_venue_submission():
     # TODO: insert form data as a new Venue record in the db, instead
     # TODO: modify data to be the data object returned from db insertion
+    print("------1")
     error = False
+    print("------1.1")
     data = request.form
+    print(data) # !!!!!!
+    print("------1.2")
     venue_name = data['name']
+    print("------1.3")
     venue_address = data['address']
     venue_city = data['city']
     venue_state = data['state']
     venue_phone = data['phone']
-    venue_website_link = data['website_link']
+    print("------1.4")
+    # venue_website_link = data['website_link']
+    print("------1.5")
     venue_facebook_link = data['facebook_link']
-    venue_image_link = data['image_link']
+    print("------1.6")
+    # venue_image_link = data['image_link']
+    print("------2")
     try:
+        print("------3")
         db.session.add(Venue(
             name=venue_name,
             address=venue_address,
             city=venue_city,
             state=venue_state,
             phone=venue_phone,
-            website_link=venue_website_link,
-            facebook_link=facebook_link,
-            image_link=venue_image_link
+            # website_link=venue_website_link,
+            facebook_link=venue_facebook_link,
+            # image_link=venue_image_link
         ))
-    except expreesion:
+        print("------4")
+    except:
+        print("------4.1")
+        print(expression)
+        print("------5")
         error = True
     finally:
+        print("------6")
         if not error:
             db.session.commit()
             flash('Venue ' + request.form['name'] + ' was successfully listed.')
+            print("------7")
         else:
+            print("------7.1")
             flash('An error occurred. Venue ' + venue_name + ' could not be listed.')
             db.session.rollback()
+        print("------8")
     return render_template('pages/home.html')
     
   # on successful db insert, flash success
