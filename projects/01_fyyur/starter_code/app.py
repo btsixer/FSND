@@ -285,22 +285,10 @@ def delete_venue(venue_id):
 #  ----------------------------------------------------------------
 @app.route('/artists')
 def artists():
-  # TODO: replace with real data returned from querying the database
-  # TODO: DONE
-
-    locales = []
-    artists = Artist.query.all()
-    for person in Artist.query.distinct(Artist.name).all():
-        locales.append({
-            'name': person.name
-            # 'state': person.state,
-            # 'venues': [{
-            #     'id': venue.id,
-            #     'name': venue.name,
-            # } for artist in artists if
-            #     artist.name == person.name
-        })
-    return render_template('pages/artists.html', artists=locales)
+    # TODO: replace with real data returned from querying the database
+    # TODO: DONE
+        data = Artist.query.all()
+        return render_template('pages/artists.html', artists=data)
 
 @app.route('/artists/search', methods=['POST'])
 def search_artists():
@@ -437,15 +425,48 @@ def create_artist_form():
 
 @app.route('/artists/create', methods=['POST'])
 def create_artist_submission():
-  # called upon submitting the new artist listing form
-  # TODO: insert form data as a new Venue record in the db, instead
-  # TODO: modify data to be the data object returned from db insertion
+  # # called upon submitting the new artist listing form
+  # # TODO: insert form data as a new Venue record in the db, instead
+  # # TODO: modify data to be the data object returned from db insertion
 
-  # on successful db insert, flash success
-  flash('Artist ' + request.form['name'] + ' was successfully listed!')
-  # TODO: on unsuccessful db insert, flash an error instead.
-  # e.g., flash('An error occurred. Artist ' + data.name + ' could not be listed.')
-  return render_template('pages/home.html')
+  # # on successful db insert, flash success
+  # flash('Artist ' + request.form['name'] + ' was successfully listed!')
+  # # TODO: on unsuccessful db insert, flash an error instead.
+  # # e.g., flash('An error occurred. Artist ' + data.name + ' could not be listed.')
+  # return render_template('pages/home.html')
+
+    error = False
+    data = request.form
+    artist_name = data['name']
+    # artist_address = data['address']
+    artist_city = data['city']
+    artist_state = data['state']
+    artist_phone = data['phone']
+    # venue_website_link = data['website_link']
+    artist_facebook_link = data['facebook_link']
+    # venue_image_link = data['image_link']
+    try:
+        db.session.add(Artist(
+            name=artist_name,
+            # address=artist_address,
+            city=artist_city,
+            state=artist_state,
+            phone=artist_phone,
+            # website_link=venue_website_link,
+            facebook_link=artist_facebook_link,
+            # image_link=venue_image_link
+        ))
+    except:
+        # print(expression)
+        error = True
+    finally:
+        if not error:
+            db.session.commit()
+            flash('Artist ' + request.form['name'] + ' was successfully listed.')
+        else:
+            flash('An error occurred. Artist ' + artist_name + ' could not be listed.')
+            db.session.rollback()
+    return render_template('pages/home.html')
 
 
 #  Shows
