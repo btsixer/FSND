@@ -171,9 +171,9 @@ pip install -r requirements.txt
 
 5. **Run the development server:**
 ```
-export FLASK_APP=myapp
+export FLASK_APP=app
 export FLASK_ENV=development # enables debug mode
-python3 app.py
+python3 -m flask run
 ```
 
 6. **Verify on the Browser**<br>

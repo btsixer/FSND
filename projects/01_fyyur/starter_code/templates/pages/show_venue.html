@@ -14,6 +14,14 @@
 			<span class="genre">{{ genre }}</span>
 			{% endfor %}
 		</div>
+		<!-- <button class="btn btn-danger" id="venue_id_delete" onclick='venueDelete({{venue.id}})'>Delete venue</button> -->
+		<form>
+			<input type="submit"
+				   value="Delete Venue"
+				   class="btn btn-primary btn-lg btn-block"
+				   formmethod="POST"
+				   formaction="{{ url_for('delete_venue', venue_id=venue.id) }}">
+		</form>
 		<p>
 			<i class="fas fa-globe-americas"></i> {{ venue.city }}, {{ venue.state }}
 		</p>
@@ -74,6 +82,24 @@
 		{% endfor %}
 	</div>
 </section>
-
+	{% block javascrip %}
+		<script>
+			function venueDelete(venue_id){
+				if(confirm('Do you wish to delete venue?')){
+					fetch('/venues/'+venue_id , {
+						method: 'DELETE',
+						headers: {
+							'content-type': 'application/json',
+							redirect: true},
+						body: JSON.stringify({id: venue_id})
+						})
+					.then(res => console.log(res))
+					.then(setTimeout(function(){
+						window.location.href = '/venues'
+						}, 1000))
+					}
+				}
+		</script>
+	{% endblock %}
 {% endblock %}
 
