@@ -14,6 +14,7 @@ from logging import Formatter, FileHandler
 from flask_wtf import Form
 from forms import *
 from datetime import datetime
+import sys
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -513,6 +514,7 @@ def create_show_submission():
     # TODO: on unsuccessful db insert, flash an error instead.
     # e.g., flash('An error occurred. Show could not be listed.')
     # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
+    # TODO: DONE
 
     error = False
     form = request.form
@@ -535,6 +537,7 @@ def create_show_submission():
             flash("An error occurred. Show could not be listed.")
             db.session.rollback()
             db.session.close()
+
     return render_template('pages/home.html')
 
 @app.errorhandler(404)
