@@ -174,14 +174,15 @@ class TriviaTestCase(unittest.TestCase):
     """
     def test_search_questions(self):
 
-        # request_data = {
-        #     'searchTerm': 'largest lake in Africa',
-        # }
+        request_data = {
+            'searchTerm': 'largest lake in Africa',
+        }
 
         # Make the request and process the response
-        # response = self.client().post('/questions/search', json=request_data)
-        response = self.client().post('/questions/search', json={'searchTerm': 'who'})
+        response = self.client().post('/questions/search', json=request_data)
+        # response = self.client().post('/questions/search', json={'searchTerm': 'who'})
         data = json.loads(response.data)
+        print('\n\n\n Here is what is stored in request_data :', request_data, '\n\n')
         print('\n\n\n Here is what is stored in data :', data, '\n\n')
 
         # Check the status code and message
