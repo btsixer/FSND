@@ -174,21 +174,106 @@ class TriviaTestCase(unittest.TestCase):
     """
     def test_search_questions(self):
 
-        request_data = {
-            'searchTerm': 'largest lake in Africa',
-        }
-
         # Make the request and process the response
-        response = self.client().post('/questions/search', json=request_data)
-        # response = self.client().post('/questions/search', json={'searchTerm': 'who'})
+        response = self.client().post('/questions/search', json={'searchTerm': 'largest lake in Africa'})
         data = json.loads(response.data)
-        print('\n\n\n Here is what is stored in request_data :', request_data, '\n\n')
-        print('\n\n\n Here is what is stored in data :', data, '\n\n')
 
         # Check the status code and message
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertEqual(len(data['questions']), 1)
+
+    """
+    Tests test_empty_search_term_response: Tests for an empty search term is entered it returns the appropriate error code
+    """
+    def test_empty_search_term_response(self):
+        
+        # Initiate an empty search request and process response
+        response = self.client().post('/questions/search', json={'searchTerm': ''})
+        data = json.loads(response.data)
+
+        # Check the status code and message
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Unprocessable')
+
+    """
+    Tests test_search_term_not_found: Tests for a search term value that does not exist in the database and returns the appropriate error code
+    """
+    def test_search_term_not_found(self):
+
+        # Initiate a search request for something that does not exist in the database and process response
+        response = self.client().post('/questions/search', json={'searchTerm': 'asdfasdfasdf'})
+        data = json.loads(response.data)
+
+        # Check the status code and message
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Resource not found')
+
+    """
+    Tests test_get_questions_by_category: Tests to retrieve the questions for a given category
+    """
+    def test_get_questions_by_category(self):
+
+        # Initiate a request for the Science category with an ID of 1
+        response = self.client().get('/categories/1/questions')
+        data = json.loads(response.data)
+
+       # Check the status code and message
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertNotEqual(len(data['questions']), 0)
+        self.assertEqual(data['current_category'], 'Science')
+
+    """
+    Tests test_if_questions_by_category_fails: Tests to retrieve the questions for a given category that does not exist and return the appropriate error
+    """
+    def test_if_questions_by_category_fails(self):
+
+        # Send request with a category ID of 111, which does not exist
+        response = self.client().get('/categories/111/questions')
+        data = json.loads(response.data)
+
+        # Check the status code and message
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Bad request')
+
+    """
+    Tests test_play_quiz_questions: Tests the trivia game with quiz questions
+    """
+    def test_play_quiz_questions(self):
+        
+        # Make the request and process the response
+        response = self.client().post('/quizzes', json={'previous_questions': [5, 9], 'quiz_category': { 'type': 'History', 'id': 4}})
+        data = json.loads(response.data)
+
+        # Check the status code and message
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['question'])
+
+        # Ensures the returned question is in the correct category
+        self.assertEqual(data['question']['category'], 4)
+
+        # Ensures that the questions from a previous quiz are not returned
+        self.assertNotEqual(data['question']['id'], 5)
+        self.assertNotEqual(data['question']['id'], 9)
+
+    """
+    Tests test_no_data_to_play_quiz: Tests the trivia game with no data returned from the application
+    """
+    def test_no_data_to_play_quiz(self):
+
+        # Process the response from the request without sending data
+        response = self.client().post('/quizzes', json={})
+        data = json.loads(response.data)
+
+        # Check the status code and message
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'Bad request')
 
 # Make the tests conveniently executable
 if __name__ == "__main__":

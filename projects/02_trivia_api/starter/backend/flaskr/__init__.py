@@ -201,9 +201,7 @@ def create_app(test_config=None):
                 abort(404)
 
             # Paginate the questions
-            paginated_questions = get_paginated_questions(
-                request, questions,
-                QUESTIONS_PER_PAGE)
+            paginated_questions = paginate_questions(request, questions)
 
             # Return a response if successful
             return jsonify({
