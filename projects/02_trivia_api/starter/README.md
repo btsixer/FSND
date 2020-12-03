@@ -13,11 +13,11 @@ This project is a game where users can test their knowledge answering trivia que
 ### Installing Dependencies
 Developers using this project should already have Python3, pip, node, and npm installed.
 
-# Frontend Dependencies
+### Frontend Dependencies
 This project uses NPM to manage software dependencies. NPM Relies on the package.json file located in the frontend directory of this repository. After cloning, open your terminal and run:
 
 npm install
-# Backend Dependencies
+### Backend Dependencies
 Once you have your virtual environment setup and running, install dependencies by naviging to the /backend directory and running:
 
 pip install -r requirements.txt
@@ -45,10 +45,10 @@ python test_flaskr.py
 Omit the dropdb command the first time you run tests.
 
 # API Reference
-# Getting Started
+### Getting Started
 Base URL: Currently this application is only hosted locally. The backend is hosted at http://127.0.0.1:5000/
 Authentication: This version does not require authentication or API keys.
-# Error Handling
+### Error Handling
 Errors are returned as JSON in the following format:
 
 {
@@ -61,7 +61,7 @@ The API will return three types of errors:
 400 – bad request
 404 – resource not found
 422 – unprocessable
-# Endpoints
+### Endpoints
 GET /categories
 General: Returns a list categories.
 
