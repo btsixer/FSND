@@ -71,7 +71,7 @@ Setting the `FLASK_ENV` variable to `development` will detect file changes and r
 
 Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` directory and the `__init__.py` file to find the application. 
 
-# Endpoint Documentation
+## Endpoint Documentation
 
 * Base URL: Currently this application is only hosted locally. The backend is hosted at `http://127.0.0.1:5000/`
 * Authentication: This version does not require authentication or API keys.
