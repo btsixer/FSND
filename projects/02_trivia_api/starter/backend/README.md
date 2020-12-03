@@ -131,11 +131,11 @@ The API will return three types of errors:
             }, 
             "questions": [
                 {
-                    "answer": "Colorado, New Mexico, Arizona, Utah", 
-                    "category": 3, 
-                    "difficulty": 3, 
-                    "id": 164, 
-                    "question": "Which four states make up the 4 Corners region of the US?"
+                    "answer": "Maya Angelou", 
+                    "category": 4, 
+                    "difficulty": 2, 
+                    "id": 5, 
+                    "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
                 }, 
                 {
                     "answer": "Muhammad Ali", 
@@ -157,13 +157,6 @@ The API will return three types of errors:
                     "difficulty": 4, 
                     "id": 4, 
                     "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
-                }, 
-                {
-                    "answer": "Edward Scissorhands", 
-                    "category": 5, 
-                    "difficulty": 3, 
-                    "id": 6, 
-                    "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
                 }, 
                 {
                     "answer": "Brazil", 
@@ -199,10 +192,17 @@ The API will return three types of errors:
                     "difficulty": 3, 
                     "id": 14, 
                     "question": "In which royal palace would you find the Hall of Mirrors?"
+                }, 
+                {
+                    "answer": "Agra", 
+                    "category": 3, 
+                    "difficulty": 2, 
+                    "id": 15, 
+                    "question": "The Taj Mahal is located in which Indian city?"
                 }
             ], 
             "success": true, 
-            "total_questions": 19
+            "total_questions": 156
         }
 
 #### DELETE /questions/\<int:id\>
@@ -210,10 +210,10 @@ The API will return three types of errors:
 * General:
   * Deletes a question by id using url parameters.
   * Returns id of deleted question upon success.
-* Sample: `curl http://127.0.0.1:5000/questions/6 -X DELETE`<br>
+* Sample: `curl http://127.0.0.1:5000/questions/17 -X DELETE`<br>
 
         {
-            "deleted": 6, 
+            "deleted": 17, 
             "success": true
         }
 
@@ -227,11 +227,16 @@ This endpoint either creates a new question or returns search results.
   * Creates a new question using JSON request parameters.
   * Returns JSON object with newly created question, as well as paginated questions.
 * Sample: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{
-            "question": "Which US state contains an area known as the Upper Penninsula?",
-            "answer": "Michigan",
+            "question": "Who is the most famous United States chess player of all time?",
+            "answer": "Bobby Fischer",
             "difficulty": 3,
-            "category": "3"
+            "category": "5"
         }'`<br>
+
+        {
+            "message": "Question successfully created!", 
+            "success": true
+        }
 
         {
             "created": 173, 
