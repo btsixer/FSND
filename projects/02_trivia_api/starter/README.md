@@ -10,7 +10,7 @@ This project is a game where users can test their knowledge answering trivia que
 5. Play the quiz game, randomizing either all questions or within a specific category.
 
 # Getting Started
-## Installing Dependencies
+### Installing Dependencies
 Developers using this project should already have Python3, pip, node, and npm installed.
 
 # Frontend Dependencies
